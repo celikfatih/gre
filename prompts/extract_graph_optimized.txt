@@ -1,0 +1,53 @@
+-Goal-
+Given a scientific or technical text and a predefined list of allowed entity types, extract a compact knowledge graph with minimal noise and minimal inference.
+
+-Constraints-
+- Extract ONLY entities whose type is explicitly listed in {entity_types}.
+- Do NOT invent entities, attributes, or relationships.
+- Do NOT infer relationships that are not explicitly stated in the text.
+- Prefer fewer, higher-confidence entities over exhaustive extraction.
+- Prefer no relationship over a weak or speculative one.
+
+-Steps-
+1. Entity Extraction
+Identify entities that clearly match one of the allowed entity types.
+
+For each entity extract:
+- entity_name: canonical short name (no citations, no section numbers)
+- entity_type: one of [{entity_types}]
+- entity_description: a concise factual description (max 1 sentence, based only on the text)
+
+Format:
+("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
+
+Rules:
+- Do NOT extract authors, institutions, venues, years, or citations unless explicitly included in {entity_types}.
+- Do NOT duplicate the same entity under different names.
+- If an entity is mentioned only once and is not central, skip it.
+
+2. Relationship Extraction
+Extract relationships ONLY when the text explicitly states a direct connection between two extracted entities.
+
+For each relationship extract:
+- source_entity
+- target_entity
+- relationship_description: short factual explanation (max 1 sentence)
+- relationship_strength: integer 1–5
+  - 5: explicitly defined or formally stated
+  - 3: clearly described in text
+  - 1: weak but explicit mention
+
+Format:
+("relationship"{tuple_delimiter}<source_entity>{tuple_delimiter}<target_entity>{tuple_delimiter}<relationship_description>{tuple_delimiter}<relationship_strength>)
+
+Rules:
+- Do NOT create relationships between all pairs.
+- Do NOT infer causality or comparison unless explicitly stated.
+- If unsure, omit the relationship.
+
+3. Output
+Return all items separated by **{record_delimiter}** and end with {completion_delimiter}.
+
+Text:
+{input_text}
+

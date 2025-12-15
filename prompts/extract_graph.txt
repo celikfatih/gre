@@ -1,0 +1,38 @@
+-Goal-
+Given a scientific or technical text and a set of allowed entity types, extract:
+1. Only entities that match the allowed types.
+2. Only relationships that explicitly appear in the text (no inference or speculation).
+
+-Steps-
+1. Identify all entities in the text that match the allowed entity types:
+- entity_name: Short canonical name
+- entity_type: One of the following types: [{entity_types}]
+- entity_description: 1–2 sentence factual summary based strictly on the text
+Format each entity as 
+("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
+
+Rules:
+- Do NOT extract PERSON, ORGANIZATION, GEO, dates, or citations unless they explicitly match the allowed entity types.
+- Do NOT invent attributes beyond what the text states.
+- Do NOT generate long descriptions.
+
+2. Identify relationships ONLY if the text explicitly states a clear factual connection.
+Each relationship must include:
+- source_entity: name of the source entity, as identified in step 1
+- target_entity: name of the target entity, as identified in step 1
+- relationship_description: 1 sentence, strictly based on text
+- relationship_strength: integer from 1–5
+Format each relationship as 
+("relationship"{tuple_delimiter}<source_entity>{tuple_delimiter}<target_entity>{tuple_delimiter}<relationship_description>{tuple_delimiter}<relationship_strength>)
+
+3. Return output in English all results as a single list separated by **{record_delimiter}**.
+
+4. When finish with {completion_delimiter}.
+
+######################
+-Real Data-
+######################
+Entity_types: {entity_types}
+Text: {input_text}
+######################
+Output:

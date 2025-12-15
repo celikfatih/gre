@@ -1,0 +1,8 @@
+entity_types:
+  - Approach
+  - Artifact
+  - Dataset
+  - Framework
+  - Metric
+  - Model
+  - Problem

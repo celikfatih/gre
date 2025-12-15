@@ -1,0 +1,6 @@
+# schemas/user.schema.yaml
+entity_types:
+  - Model
+  - Dataset
+  - Metric
+  - Framework
