@@ -5,8 +5,12 @@ from pdf_loader import PdfLoader
 from text_writer import TextWriter
 from text_extractor import TextExtractor
 from layout_repairer import LayoutRepairer
-# from cleaners.front_matter_cleaner import FrontMatterCleaner
+from cleaners.front_matter_cleaner import FrontMatterCleaner
 from cleaners.header_footer_cleaner import HeaderFooterCleaner
+from cleaners.publication_metadata_cleaner import PublicationMetadataCleaner
+from cleaners.reference_cleaner import ReferenceCleaner
+from cleaners.inline_reference_cleaner import InlineReferenceCleaner
+from cleaners.noise_cleaner import NoiseCleaner
 from line_normalizer import LineNormalizer
 from processor import PdfIngestionProcessor
 from batch_runner import BatchIngestionRunner
@@ -26,11 +30,12 @@ extractor = TextExtractor()
 layout_repairer = LayoutRepairer()
 
 cleaners: list[Any] = [
-    # FrontMatterCleaner()
-    # LineNormalizerCleaner(),
-    # HeaderNormalizerCleaner(),
+    FrontMatterCleaner(),
     HeaderFooterCleaner(),
-    # PublicationMetadataCleaner()
+    PublicationMetadataCleaner(),
+    ReferenceCleaner(),
+    InlineReferenceCleaner(),
+    NoiseCleaner()
 ]
 normalizer = LineNormalizer()
 

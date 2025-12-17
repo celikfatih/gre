@@ -26,18 +26,30 @@ class PdfIngestionProcessor:
                 pdf_path.name
             )
         
+        original_len = len(text)
+
         self.logger.info(
             'PDF loaded successfully | file=%s | chars=%d',
             pdf_path.name,
-            len(text),
+            original_len,
         )
 
         self.repairer.set_source(pdf_path.name)
         text = self.repairer.process(text)
 
         for cleaner in self.cleaners:
-           cleaner.set_source(pdf_path.name)
-           text = cleaner.run(text)
+            cleaner.set_source(pdf_path.name)
+            text = cleaner.run(text)
 
+        self.normalizer.set_source(pdf_path.name)
         text = self.normalizer.normalize(text)
+
+        removed_ratio = 1 - (len(text) / max(original_len, 1))
+
+        self.logger.info(
+            'PDF processed successfully | file=%s | chars=%d | removed_ratio=%.2f',
+            pdf_path.name,
+            len(text),
+            removed_ratio,
+        )
         return text

@@ -36,7 +36,7 @@ class PublicationMetadataCleaner(BaseCleaner):
             nonlocal buffer, metadata_score, removed_blocks, removed_lines
             if metadata_score < 2:
                 cleaned.extend(buffer)
-                self.logger.info(
+                self.log_info(
                     'Metadata block kept | lines=%d score=%d',
                     len(buffer),
                     metadata_score,
@@ -44,7 +44,7 @@ class PublicationMetadataCleaner(BaseCleaner):
             else:
                 removed_blocks += 1
                 removed_lines += len(buffer)
-                self.logger.info(
+                self.log_info(
                     'Metadata block removed | lines=%d score=%d',
                     len(buffer),
                     metadata_score,
@@ -69,7 +69,7 @@ class PublicationMetadataCleaner(BaseCleaner):
         removed_ratio = 1 - (len(output) / max(len(text), 1))
 
         if removed_ratio > 0.5:
-            self.logger.error(
+            self.log_error(
                 'PublicationMetadataCleaner aborted | excessive removal | removed_ratio=%.2f',
                 removed_ratio
             )

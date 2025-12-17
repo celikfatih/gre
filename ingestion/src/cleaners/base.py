@@ -51,20 +51,27 @@ class BaseCleaner(ABC):
 
     def log_info(self, msg: str, *args: Any) -> None:
         if self.source_id:
-            self.logger.info(f"file={self.source_id} | {msg}", *args)
+            self.logger.info(f'file={self.source_id} | {msg}', *args)
         else:
             self.logger.info(msg, *args)
 
 
     def log_warning(self, msg: str, *args: Any) -> None:
         if self.source_id:
-            self.logger.warning(f"file={self.source_id} | {msg}", *args)
+            self.logger.warning(f'file={self.source_id} | {msg}', *args)
         else:
             self.logger.warning(msg, *args)
     
 
     def log_error(self, msg: str, *args: Any) -> None:
         if self.source_id:
-            self.logger.error(f"file={self.source_id} | {msg}", *args)
+            self.logger.error(f'file={self.source_id} | {msg}', *args)
         else:
             self.logger.error(msg, *args)
+    
+
+    def log_debug(self, msg: str, *args: Any) -> None:
+        if self.source_id:
+            self.logger.debug(f'file={self.source_id} | {msg}', *args)
+        else:
+            self.logger.debug(msg, *args)
