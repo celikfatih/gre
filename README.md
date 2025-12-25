@@ -1,5 +1,10 @@
 ## graphrag-review-article
 
+
 ```
-pip install -r requirements.txt
+cd gre
+
+pip install -e .
+
+python -m gre
 ```

@@ -1,10 +1,7 @@
-from pdf_loader import PdfLoader
-from text_writer import TextWriter
-from processor import PdfIngestionProcessor
-from logger.logger import get_logger
-
-
-logger = get_logger(__name__)
+from gre.ingestion.loader.pdf_loader import PdfLoader
+from gre.ingestion.post.text_writer import TextWriter
+from gre.ingestion.processor import PdfIngestionProcessor
+from gre.logger.logger import get_logger
 
 
 class BatchIngestionRunner:
@@ -12,11 +9,12 @@ class BatchIngestionRunner:
         self.loader = loader
         self.processor = processor
         self.writer = writer
+        self.logger = get_logger(self.__class__.__name__)
     
 
     def run(self):
-        logger.info('Ingestion started')
+        self.logger.info('Ingestion started')
         for pdf in self.loader.list_items():
             cleaned_text = self.processor.process(pdf)
             self.writer.write(pdf.stem, cleaned_text)
-        logger.info('Ingestion finished')
+        self.logger.info('Ingestion finished')

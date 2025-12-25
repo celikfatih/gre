@@ -1,7 +1,7 @@
 import re
 from typing import Any
 
-from cleaners.base import BaseCleaner
+from gre.ingestion.cleaners.base import BaseCleaner
 
 
 class PublicationMetadataCleaner(BaseCleaner):

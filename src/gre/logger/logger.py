@@ -16,7 +16,7 @@ def get_logger(name: str) -> logging.Logger:
             level=logging.INFO,
             format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
             handlers=[
-                logging.FileHandler(log_dir / 'ingestion.log'),
+                logging.FileHandler(log_dir / 'preprocessing.log'),
                 logging.StreamHandler()
             ]
         )

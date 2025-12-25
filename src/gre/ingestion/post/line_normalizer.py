@@ -1,6 +1,7 @@
 import re
 
-from logger.logger import get_logger
+from gre.logger.logger import get_logger
+
 
 class LineNormalizer:
     def __init__(self) -> None:

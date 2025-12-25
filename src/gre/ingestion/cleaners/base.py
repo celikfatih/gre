@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from logger.logger import get_logger
+from gre.logger.logger import get_logger
 from typing import Any
 
 

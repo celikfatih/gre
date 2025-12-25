@@ -1,10 +1,10 @@
 from pathlib import Path
 
-from text_extractor import TextExtractor
-from layout_repairer import LayoutRepairer
-from line_normalizer import LineNormalizer
-from logger.logger import get_logger
-from cleaners.base import BaseCleaner
+from gre.ingestion.loader.text_extractor import TextExtractor
+from gre.ingestion.pre.layout_repairer import LayoutRepairer
+from gre.ingestion.post.line_normalizer import LineNormalizer
+from gre.logger.logger import get_logger
+from gre.ingestion.cleaners.base import BaseCleaner
 
 
 class PdfIngestionProcessor:

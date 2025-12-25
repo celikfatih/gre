@@ -1,6 +1,6 @@
 import re
 
-from logger.logger import get_logger
+from gre.logger.logger import get_logger
 
 
 HEADER_BODY_KEYS = ['Keywords:', 'Abstract', 'Highlights', 'Introduction', 'Background', 'Conclusion']

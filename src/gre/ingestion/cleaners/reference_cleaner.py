@@ -1,6 +1,6 @@
 import re
 
-from cleaners.base import BaseCleaner
+from gre.ingestion.cleaners.base import BaseCleaner
 
 
 PATTERNS = [

@@ -3,7 +3,7 @@ import re
 from difflib import SequenceMatcher
 from typing import List, Tuple, Set
 
-from cleaners.base import BaseCleaner
+from gre.ingestion.cleaners.base import BaseCleaner
 
 
 class HeaderFooterCleaner(BaseCleaner):
