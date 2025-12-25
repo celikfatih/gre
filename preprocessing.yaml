@@ -1,0 +1,11 @@
+# Shared configuration for GRE pipelines (Ingestion & Condensation)
+
+# Default directories
+ingestion:
+  input_dir: input/pdfs
+  output_dir: output/cleaned_texts
+
+# Condensation specific settings
+condensation:
+  output_dir: output/condensed_texts
+  prompt_path: prompts/review_condense.txt

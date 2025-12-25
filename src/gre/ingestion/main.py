@@ -17,42 +17,35 @@ from gre.ingestion.processor import PdfIngestionProcessor
 from gre.ingestion.batch_runner import BatchIngestionRunner
 
 
-logger = get_logger(__name__)
+def run(input_dir: str, output_dir: str):
+    loader = PdfLoader(Path(input_dir))
+    writer = TextWriter(Path(output_dir))
 
+    extractor = TextExtractor()
+    layout_repairer = LayoutRepairer()
 
-INPUT_DIR = Path('input/pdfs')
-OUTPUT_DIR = Path('output/cleaned_texts')
+    cleaners: list[Any] = [
+        FrontMatterCleaner(),
+        HeaderFooterCleaner(),
+        PublicationMetadataCleaner(),
+        ReferenceCleaner(),
+        InlineReferenceCleaner(),
+        NoiseCleaner()
+    ]
 
+    normalizer = LineNormalizer()
 
-loader = PdfLoader(INPUT_DIR)
-writer = TextWriter(OUTPUT_DIR)
+    processor = PdfIngestionProcessor(
+        extractor=extractor,
+        repairer=layout_repairer,
+        cleaners=cleaners,
+        normalizer=normalizer
+    )
 
-extractor = TextExtractor()
-layout_repairer = LayoutRepairer()
-
-cleaners: list[Any] = [
-    FrontMatterCleaner(),
-    HeaderFooterCleaner(),
-    PublicationMetadataCleaner(),
-    ReferenceCleaner(),
-    InlineReferenceCleaner(),
-    NoiseCleaner()
-]
-normalizer = LineNormalizer()
-
-processor = PdfIngestionProcessor(
-    extractor=extractor,
-    repairer=layout_repairer,
-    cleaners=cleaners,
-    normalizer=normalizer
-)
-
-runner = BatchIngestionRunner(
-    loader=loader,
-    processor=processor,
-    writer=writer
-)
-
-
-def run():
+    runner = BatchIngestionRunner(
+        loader=loader,
+        processor=processor,
+        writer=writer
+    )
+    
     runner.run()
