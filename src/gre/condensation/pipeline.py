@@ -27,9 +27,9 @@ class ReviewCondensationPipeline(CondensationPipeline):
             raise
         
 
-    def run(self, input_text: str) -> str:
+    async def arun(self, input_text: str) -> str:
         '''
-        Runs the condensation process: 
+        Runs the condensation process asynchronously: 
         1. Formats the prompt with input text.
         2. Calls LLM.
         3. Validates response.
@@ -47,7 +47,7 @@ class ReviewCondensationPipeline(CondensationPipeline):
             raise
         
         # Generate with retries handled by the provider
-        response = self.llm.generate(formatted_prompt)
+        response = await self.llm.agenerate(formatted_prompt)
         
         # Clean response
         cleaned_response = self.validator.clean(response)

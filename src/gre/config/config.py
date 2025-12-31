@@ -1,3 +1,5 @@
+import os
+import re
 import yaml
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -24,7 +26,19 @@ class ConfigLoader:
 
         try:
             with open(self.config_path, 'r') as f:
-                return yaml.safe_load(f) or {}
+                content = f.read()
+
+            # Simple environment variable substitution
+            # pattern matches ${VAR_NAME}
+            pattern = re.compile(r'\$\{([^}^{]+)\}')
+            
+            def replace_env(match):
+                var_name = match.group(1)
+                return os.environ.get(var_name, match.group(0))
+
+            content = pattern.sub(replace_env, content)
+
+            return yaml.safe_load(content) or {}
         except yaml.YAMLError as e:
             self.logger.error(f'Error parsing YAML file: {e}')
             raise

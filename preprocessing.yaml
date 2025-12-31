@@ -7,5 +7,5 @@ ingestion:
 
 # Condensation specific settings
 condensation:
-  output_dir: output/condensed_texts
+  output_dir: ${CONDENSED_BASE_DIR}
   prompt_path: prompts/review_condense.txt

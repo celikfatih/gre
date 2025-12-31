@@ -33,4 +33,4 @@ class PdfLoader:
             time.time() - start_time,
         )
         
-        return pdf_files[:1]
+        return pdf_files

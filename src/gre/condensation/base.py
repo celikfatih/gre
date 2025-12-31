@@ -3,8 +3,8 @@ from abc import ABC, abstractmethod
 
 class LLMProvider(ABC):
     @abstractmethod
-    def generate(self, prompt: str) -> str:
-        '''Generates text from the LLM.'''
+    async def agenerate(self, prompt: str) -> str:
+        '''Generates text from the LLM asynchronously.'''
         pass
 
 
@@ -22,6 +22,6 @@ class ResponseValidator(ABC):
 
 class CondensationPipeline(ABC):
     @abstractmethod
-    def run(self, input_text: str) -> str:
-        '''Runs the condensation process on input text.'''
+    async def arun(self, input_text: str) -> str:
+        '''Runs the condensation process on input text asynchronously.'''
         pass

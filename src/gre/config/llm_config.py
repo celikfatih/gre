@@ -1,22 +1,12 @@
 import os
 import re
 import yaml
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Optional
 
 from gre.logger.logger import get_logger
-
-
-@dataclass
-class LLMConfig:
-    model: str
-    api_key: Optional[str] = None
-    api_base: Optional[str] = None
-    api_version: Optional[str] = None
-    max_retries: int = 10
-    tokens_per_minute: Optional[int] = None
-    requests_per_minute: Optional[int] = None
+from graphrag.config.models.language_model_config import LanguageModelConfig
+from graphrag.config.enums import AuthType, ModelType, AsyncType
 
 
 class LLMConfigLoader:
@@ -51,7 +41,7 @@ class LLMConfigLoader:
             raise
 
 
-    def get_llm_config(self, model_id: str = 'default_chat_model') -> LLMConfig:
+    def get_llm_config(self, model_id: str = 'default_chat_model') -> LanguageModelConfig:
         '''
         Extracts LLM configuration for a specific model ID.
         '''
@@ -62,14 +52,20 @@ class LLMConfigLoader:
             if not model_config:
                  self.logger.warning(f'No configuration found for model_id: {model_id}, using defaults/empty.')
 
-            return LLMConfig(
+            return LanguageModelConfig(
                 model=model_config.get('model', 'gpt-4-turbo-preview'), # Fallback default
                 api_key=model_config.get('api_key'),
                 api_base=model_config.get('api_base'),
                 api_version=model_config.get('api_version'),
                 max_retries=model_config.get('max_retries', 10),
                 tokens_per_minute=model_config.get('tokens_per_minute'),
-                requests_per_minute=model_config.get('requests_per_minute')
+                requests_per_minute=model_config.get('requests_per_minute'),
+                model_provider=model_config.get('model_provider', 'openai'),
+                auth_type=AuthType(model_config.get('auth_type', 'api_key')),
+                async_mode=AsyncType(model_config.get('async_mode', 'threaded')),
+                concurrent_requests=model_config.get('concurrent_requests', 25),
+                retry_strategy=model_config.get('retry_strategy', 'exponential_backoff'),
+                type=ModelType.Chat # Assuming we are loading chat models
             )
         except Exception as e:
             self.logger.error(f'Error extracting LLM config: {e}')

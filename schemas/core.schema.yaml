@@ -1,5 +1,0 @@
-# schemas/core.schema.yaml
-entity_types:
-  - Problem
-  - Approach
-  - Artifact
