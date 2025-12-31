@@ -39,7 +39,10 @@ DO NOT change section titles.
 - Remove all narrative, historical, and motivational sentences.
 - Do not paraphrase technical names.
 - Do not merge distinct concepts.
-- If a section has no content, output the section header with no bullets.
+- Do not repeat the same information across bullets.
+- Do not repeat the same sentence structure excessively.
+- If a section has no content, YOU MUST output the section header with no bullets.
+- ENSURE all sections are present.
 
 -INPUT-
 {input_text}

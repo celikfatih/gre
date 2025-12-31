@@ -47,7 +47,19 @@ class ReviewArticleValidator(ResponseValidator):
 
     def clean(self, response: str) -> str:
         '''
-        Attempts to clean the response. For now, it just strips whitespace.
-        Future improvements could try to repair broken headers.
+        Attempts to clean the response.
+        Repairs missing sections by appending them if they are not present.
         '''
-        return response.strip()
+        cleaned = response.strip()
+        
+        # Auto-repair: Check for missing sections and append them
+        for section in REQUIRED_SECTIONS:
+            pattern = f'### SECTION: {section}'
+            if pattern not in cleaned:
+                self.logger.warning(f'Repairing response: Appending missing section {section}')
+                # Append the section with a placeholder explaining it was empty/missing
+                # But per strict format, maybe just the header is enough or header + empty?
+                # The prompt says: "If a section has no content, output the section header with no bullets."
+                cleaned += f'\n\n{pattern}'
+        
+        return cleaned

@@ -30,12 +30,12 @@ class GraphRagLLMProvider(LLMProvider):
             raise
 
 
-    async def agenerate(self, prompt: str) -> str:
+    async def agenerate(self, prompt: str, **kwargs) -> str:
         try:
             self.logger.info(f'Generating content with model: {self.config.model}')
             
             # LitellmChatModel.chat signature: (prompt: str, history: list | None = None, **kwargs)
-            response = await self.llm.achat(prompt)
+            response = await self.llm.achat(prompt, **kwargs)
 
 
             # It seems GraphRag's LitellmChatModel returns a refined string OR a response object depending on usage

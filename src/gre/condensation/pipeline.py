@@ -47,7 +47,13 @@ class ReviewCondensationPipeline(CondensationPipeline):
             raise
         
         # Generate with retries handled by the provider
-        response = await self.llm.agenerate(formatted_prompt)
+        # frequency_penalty to reduce repetition
+        # temperature=0.0 for deterministic structure
+        response = await self.llm.agenerate(
+            formatted_prompt, 
+            temperature=0.0,
+            frequency_penalty=0.5
+        )
         
         # Clean response
         cleaned_response = self.validator.clean(response)
